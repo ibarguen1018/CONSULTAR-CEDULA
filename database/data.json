@@ -1,0 +1,8 @@
+[
+    {"cedula": "345678912", "nombre": "Juan", "apellido": "Pérez", "edad": 30},
+    {"cedula": "987654321", "nombre": "María", "apellido": "Gómez", "edad": 25},
+    {"cedula": "017153712", "nombre": "Alexis", "apellido": "hernandez", "edad": 20},
+    {"cedula": "0171537111", "nombre": "Alexis", "apellido": "hernandez", "edad": 20},
+    {"cedula": "1613242814", "nombre": "paola", "apellido": "Lobo", "edad": 20}
+]
+
