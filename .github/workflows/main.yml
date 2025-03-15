@@ -1,0 +1,44 @@
+name: Deploy Flask App
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Crear y activar entorno virtual
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt
+
+      - name: Inicializar la base de datos
+        run: |
+          python init_db.py
+
+      - name: Ejecutar la aplicación 
+        run: |
+          nohup python app.py &  # Corre el servidor Flask en segundo plano
+
+      - name: Subir cambios si hay modificaciones
+        run: |
+          git config --global user.email "cibarguen483@gmail.com"
+          git config --global user.name "ibarguen1018"
+          git add .
+          git commit -m "Actualización automática de datos" || echo "No hay cambios para commit"
+          git push
