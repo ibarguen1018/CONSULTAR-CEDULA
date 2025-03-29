@@ -10,12 +10,13 @@
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-900 relative">
     <!-- Fondo con imagen y overlay -->
-    <div class="absolute top-10">
-        <a href="https://imgbb.com/"><img src="https://i.ibb.co/rXZpG6f/IUD.png" alt="IUD" border="0" class="mx-auto"></a>
+    <div class="absolute top-10 left-10">
+        <a href="">
+            <img src="https://i.ibb.co/rXZpG6f/IUD.png" alt="IUD" border="0" class="mx-auto" style="width:400px;">
+        </a>
     </div>
     
-    
-        <!-- Contenido principal -->
+    <!-- Contenido principal -->
     <div class="relative z-10 bg-white p-8 rounded-lg shadow-2xl w-96 text-center animate-fadeIn transform transition-all hover:scale-105">
         <h1 class="text-2xl font-bold text-gray-800 mb-4 flex justify-center items-center">
             🔎 Consulta de Cédula
@@ -31,10 +32,33 @@
             🚀 Consultar
         </button>
 
-        <!-- Resultado -->
-        <div id="resultado"></div>
+        <!-- Contenedor para mostrar el resultado -->
+        <div id="resultado" class="mt-4"></div>
     </div>
 
-    <script src="/static/script.js"></script>
+    <!-- Script para buscar persona y mostrar la foto -->
+    <script>
+        function buscarPersona() {
+            let cedula = document.getElementById("cedula").value;
+
+            fetch(`/buscar?cedula=${cedula}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("resultado").innerHTML = `<p style="color:red">${data.error}</p>`;
+                    } else {
+                        document.getElementById("resultado").innerHTML = `
+                            <p><strong>Nombre:</strong> ${data.nombre} ${data.apellido}</p>
+                            <p><strong>Género:</strong> ${data.genero}</p>
+                            <p><strong>Fecha de Nacimiento:</strong> ${data.Fecha_Nacimiento}</p>
+                            <p><strong>Cargo:</strong> ${data.cargo}</p>
+                            <p><strong>Edad:</strong> ${data.edad}</p>
+                            <img src="${data.foto}" alt="Foto de ${data.nombre}" class="mx-auto rounded-lg mt-4" style="max-width:100%; height:auto;">
+                        `;
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+    </script>
 </body>
 </html>

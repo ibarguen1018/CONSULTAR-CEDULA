@@ -22,7 +22,16 @@ def buscar_persona():
     conn.close()
 
     if persona:
-        return jsonify({"cedula": persona[0], "nombre": persona[1], "apellido": persona[2], "edad": persona[3]})
+        return jsonify({
+            "cedula": persona[0],
+            "nombre": persona[1],
+            "apellido": persona[2],
+            "genero": persona[3],
+            "Fecha_Nacimiento": persona[4],
+            "cargo": persona[5],
+            "edad": persona[6],
+            "foto": persona[7]
+        })
     else:
         return jsonify({"error": "Persona no encontrada"}), 404
 
